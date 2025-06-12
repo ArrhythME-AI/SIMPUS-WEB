@@ -333,7 +333,7 @@
 <body>
     <div class="container">
         <div id="mainContent" style="display: none;">
-            <h1>SIMPUS MKP KELOMPOK 10 2025</h1>
+            <h1>SIMPUS MKP KELOMPOK 10</h1>
 
             <nav>
                 <ul>
@@ -350,6 +350,10 @@
             <div id="dashboard" class="section">
                 <h2>Dashboard</h2>
                 <p>Selamat datang di SIMPUS Anda.</p>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGQ0ODk4Y2VmcGNwZm54bDBuM3B3eG5vcWV3azI5NHh5NDV4NnU2YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2w0D1F3gG069Nn05g2/giphy.gif" alt="Selamat Datang di SIMPUS" style="max-width: 300px; height: auto; border-radius: 8px;">
+                    <p style="font-size: 0.9em; color: #666; margin-top: 5px;">Aplikasi Sistem Informasi Puskesmas</p>
+                </div>
                 <h3>Ringkasan Data Puskesmas</h3>
                 <div class="widget-grid">
                     <div class="widget">
@@ -409,12 +413,21 @@
                         <option value="tidak">Tidak Dirujuk</option>
                         <option value="dirujuk">Dirujuk</option>
                     </select>
+                    
+                    <div id="rujukanDetailFields" style="display: none;">
+                        <label for="alasanRujukan" style="margin-top: 15px;">Alasan Rujukan:</label>
+                        <textarea id="alasanRujukan" name="alasanRujukan" rows="2"></textarea>
+
+                        <label for="fasilitasRujukan">Fasilitas Rujukan:</label>
+                        <input type="text" id="fasilitasRujukan" name="fasilitasRujukan">
+                    </div>
 
                     <button type="submit" style="margin-top: 20px;">Daftar Pasien</button>
                 </form>
 
                 <h3>Daftar Pasien Terdaftar</h3>
-                <table id="tabelPendaftaranPasien"> <thead>
+                <table id="tabelPendaftaranPasien">
+                    <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nama</th>
@@ -443,13 +456,7 @@
                         </tr>
                     </thead>
                     <tbody id="rekamMedisRawatJalanBody">
-                        <tr><td>P001</td><td>Pasien A</td><td>2025-06-11</td><td>J00 (Common Cold)</td><td>89.02 (Wawancara Medis)</td></tr>
-                        <tr><td>P003</td><td>Pasien C</td><td>2025-06-10</td><td>I10 (Hipertensi Primer)</td><td>89.03 (Pengukuran Tensi)</td></tr>
-                        <tr><td>P004</td><td>Pasien D</td><td>2025-06-09</td><td>A90 (Demam Dengue)</td><td>99.20 (Pengambilan Sampel Darah)</td></tr>
-                        <tr><td>P005</td><td>Pasien E</td><td>2025-06-08</td><td>N39.0 (Infeksi Saluran Kemih)</td><td>90.09 (Pemeriksaan Urin Lengkap)</td></tr>
-                        <tr><td>P010</td><td>Pasien J</td><td>2025-06-05</td><td>I21.9 (Miokard Infark Akut)</td><td>89.52 (Elektrokardiogram)</td></tr>
-                        <tr><td>P011</td><td>Pasien K</td><td>2025-06-04</td><td>K29.7 (Gastritis)</td><td>89.04 (Auskultasi Abdomen)</td></tr>
-                    </tbody>
+                        </tbody>
                 </table>
                 <h3 style="margin-top: 30px;">Daftar Pasien Rujukan</h3>
                 <table id="tabelRekamMedisRujukan">
@@ -463,9 +470,7 @@
                         </tr>
                     </thead>
                     <tbody id="rekamMedisRujukanBody">
-                        <tr><td>P008</td><td>Pasien H</td><td>2025-06-07</td><td>Apendisitis Akut</td><td>RS Umum Sehat</td></tr>
-                        <tr><td>P009</td><td>Pasien I</td><td>2025-06-06</td><td>Fraktur Tulang Lengan Bawah</td><td>RS Orthopedi Jaya</td></tr>
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
 
@@ -484,11 +489,7 @@
                         </tr>
                     </thead>
                     <tbody id="rawatInapBody">
-                        <tr><td>P002</td><td>Ani Lestari</td><td>Melati</td><td>1A</td><td>2025-06-10</td><td>A09 (Diare Akut)</td></tr>
-                        <tr><td>P006</td><td>Bayu Dirgantara</td><td>Cempaka</td><td>2B</td><td>2025-06-09</td><td>J18.9 (Pneumonia)</td></tr>
-                        <tr><td>P007</td><td>Clara Devi</td><td>Mawar</td><td>3C</td><td>2025-06-08</td><td>A01.0 (Typhoid Fever)</td></tr>
-                        <tr><td>P012</td><td>Indah Sari</td><td>Anggrek</td><td>4D</td><td>2025-06-03</td><td>J06.9 (ISPA)</td></tr>
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
 
@@ -637,8 +638,8 @@
 
                 renderPasienTableDashboard();
                 renderPasienTablePendaftaran();
-                renderRekamMedisTables(); // <-- Panggil fungsi baru ini
-                renderRawatInapTable(); // <-- Panggil fungsi ini juga
+                renderRekamMedisTables();
+                renderRawatInapTable();
                 updateDashboardStats();
             } catch (error) {
                 console.error("Error fetching pasien data:", error);
@@ -668,33 +669,31 @@
                 row.insertCell().textContent = pasien.nama;
                 row.insertCell().textContent = pasien.jenis ? pasien.jenis.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'N/A';
                 row.insertCell().textContent = pasien.tanggal;
-                row.insertCell().textContent = pasien.statusRujukan ? pasien.statusRujukan.replace(/\b\w/g, l => l.toUpperCase()) : 'Tidak Dirujuk'; // Menampilkan status rujukan
+                row.insertCell().textContent = pasien.statusRujukan ? (pasien.statusRujukan === 'dirujuk' ? 'Dirujuk' : 'Tidak Dirujuk') : 'Tidak Dirujuk';
             });
         }
 
         function renderRekamMedisTables() {
-            const tabelRawatJalanBody = document.querySelector('#tabelRekamMedisRawatJalan tbody');
-            const tabelRujukanBody = document.querySelector('#tabelRekamMedisRujukan tbody');
+            const tabelRawatJalanBody = document.querySelector('#rekamMedisRawatJalanBody');
+            const tabelRujukanBody = document.querySelector('#rekamMedisRujukanBody');
             tabelRawatJalanBody.innerHTML = '';
             tabelRujukanBody.innerHTML = '';
 
             pasienData.forEach(pasien => {
                 if (pasien.jenis === 'rawat_jalan' && pasien.statusRujukan !== 'dirujuk') {
-                    // Tambahkan ke tabel rawat jalan (jika bukan rujukan)
                     const row = tabelRawatJalanBody.insertRow();
                     row.insertCell().textContent = pasien.id;
                     row.insertCell().textContent = pasien.nama;
-                    row.insertCell().textContent = pasien.tanggal;
-                    row.insertCell().textContent = pasien.diagnosa || 'Belum ada'; // Tambahkan diagnosa jika ada
-                    row.insertCell().textContent = pasien.tindakan || 'Belum ada'; // Tambahkan tindakan jika ada
+                    row.insertCell().textContent = pasien.tanggal; // Tanggal Kunjungan
+                    row.insertCell().textContent = pasien.diagnosa || 'Belum ada';
+                    row.insertCell().textContent = pasien.tindakan || 'Belum ada';
                 } else if (pasien.statusRujukan === 'dirujuk') {
-                    // Tambahkan ke tabel rujukan
                     const row = tabelRujukanBody.insertRow();
                     row.insertCell().textContent = pasien.id;
                     row.insertCell().textContent = pasien.nama;
-                    row.insertCell().textContent = pasien.tanggal; // Tanggal rujukan bisa sama dengan tanggal pendaftaran
-                    row.insertCell().textContent = pasien.alasanRujukan || 'Tidak ada'; // Tambahkan alasan rujukan
-                    row.insertCell().textContent = pasien.fasilitasRujukan || 'Tidak ada'; // Tambahkan fasilitas rujukan
+                    row.insertCell().textContent = pasien.tanggal; // Tanggal Rujukan (dari pendaftaran)
+                    row.insertCell().textContent = pasien.alasanRujukan || 'Tidak ada';
+                    row.insertCell().textContent = pasien.fasilitasRujukan || 'Tidak ada';
                 }
             });
         }
@@ -707,10 +706,10 @@
                     const row = tabelRawatInapBody.insertRow();
                     row.insertCell().textContent = pasien.id;
                     row.insertCell().textContent = pasien.nama;
-                    row.insertCell().textContent = pasien.ruangan || 'Belum dialokasikan'; // Tambahkan ruangan
-                    row.insertCell().textContent = pasien.bed || 'Belum dialokasikan'; // Tambahkan bed
-                    row.insertCell().textContent = pasien.tanggal; // Tanggal masuk
-                    row.insertCell().textContent = pasien.diagnosa || 'Belum ada'; // Tambahkan diagnosa
+                    row.insertCell().textContent = pasien.ruangan || 'Belum dialokasikan';
+                    row.insertCell().textContent = pasien.bed || 'Belum dialokasikan';
+                    row.insertCell().textContent = pasien.tanggal;
+                    row.insertCell().textContent = pasien.diagnosa || 'Belum ada';
                 }
             });
         }
@@ -721,7 +720,7 @@
             const kunjunganToday = pasienData.filter(p => p.tanggal === today).length;
             document.getElementById('kunjunganHariIni').textContent = kunjunganToday;
             document.getElementById('pasienRawatInap').textContent = pasienData.filter(p => p.jenis === 'rawat_inap').length;
-            document.getElementById('pasienRujukan').textContent = pasienData.filter(p => p.statusRujukan === 'dirujuk').length; // Menggunakan statusRujukan
+            document.getElementById('pasienRujukan').textContent = pasienData.filter(p => p.statusRujukan === 'dirujuk').length;
 
             document.getElementById('laporanRawatJalan').textContent = pasienData.filter(p => p.jenis === 'rawat_jalan' && p.statusRujukan !== 'dirujuk').length;
             document.getElementById('laporanRawatInap').textContent = pasienData.filter(p => p.jenis === 'rawat_inap').length;
@@ -729,32 +728,53 @@
         }
 
         // --- Handle Form Pendaftaran (dengan penyimpanan ke Firestore) ---
-        document.getElementById('formPendaftaran').addEventListener('submit', async function(event) {
+        const formPendaftaran = document.getElementById('formPendaftaran');
+        const statusRujukanSelect = document.getElementById('statusRujukan');
+        const rujukanDetailFields = document.getElementById('rujukanDetailFields');
+
+        // Toggle visibility of rujukan fields
+        statusRujukanSelect.addEventListener('change', function() {
+            if (this.value === 'dirujuk') {
+                rujukanDetailFields.style.display = 'block';
+            } else {
+                rujukanDetailFields.style.display = 'none';
+                // Clear fields if hidden
+                document.getElementById('alasanRujukan').value = '';
+                document.getElementById('fasilitasRujukan').value = '';
+            }
+        });
+
+        formPendaftaran.addEventListener('submit', async function(event) {
             event.preventDefault();
             const nama = document.getElementById('namaPasien').value;
             const tanggalLahir = document.getElementById('tanggalLahir').value;
             const alamat = document.getElementById('alamatPasien').value;
             const jenis = document.getElementById('jenisKunjungan').value;
-            const statusRujukan = document.getElementById('statusRujukan').value; // Ambil status rujukan
+            const statusRujukan = document.getElementById('statusRujukan').value;
             const newDate = new Date().toISOString().slice(0, 10);
 
+            const pasienDataToSave = {
+                nama: nama,
+                tanggalLahir: tanggalLahir,
+                alamat: alamat,
+                jenis: jenis,
+                tanggal: newDate,
+                statusRujukan: statusRujukan
+            };
+
+            // Tambahkan detail rujukan jika statusnya 'dirujuk'
+            if (statusRujukan === 'dirujuk') {
+                pasienDataToSave.alasanRujukan = document.getElementById('alasanRujukan').value;
+                pasienDataToSave.fasilitasRujukan = document.getElementById('fasilitasRujukan').value;
+            }
+
             try {
-                // Tambahkan dokumen baru ke koleksi "pasien" di Firestore
-                const docRef = await addDoc(collection(db, "pasien"), {
-                    nama: nama,
-                    tanggalLahir: tanggalLahir,
-                    alamat: alamat,
-                    jenis: jenis,
-                    tanggal: newDate, // Tanggal pendaftaran
-                    statusRujukan: statusRujukan // Simpan status rujukan
-                    // Anda bisa menambahkan field lain seperti diagnosa, tindakan, ruangan, bed
-                    // sesuai kebutuhan untuk setiap jenis pasien, atau menanganinya di
-                    // form terpisah jika lebih kompleks.
-                });
+                const docRef = await addDoc(collection(db, "pasien"), pasienDataToSave);
                 console.log("Dokumen ditulis dengan ID: ", docRef.id);
                 alert('Pasien ' + nama + ' berhasil didaftarkan sebagai ' + jenis.replace(/_/g, ' ') + (statusRujukan === 'dirujuk' ? ' (Dirujuk)' : '') + '!');
-                this.reset(); // Reset form
-                await fetchAndRenderPasienData(); // Muat ulang data setelah penambahan
+                this.reset();
+                statusRujukanSelect.dispatchEvent(new Event('change')); // Reset rujukan fields visibility
+                await fetchAndRenderPasienData();
             } catch (e) {
                 console.error("Error menambahkan dokumen: ", e);
                 alert("Gagal mendaftarkan pasien. Terjadi kesalahan: " + e.message);
@@ -822,9 +842,9 @@
                 pasienData = [];
                 renderPasienTableDashboard();
                 renderPasienTablePendaftaran();
-                document.querySelector('#tabelRekamMedisRawatJalan tbody').innerHTML = ''; // Kosongkan tabel
-                document.querySelector('#tabelRekamMedisRujukan tbody').innerHTML = ''; // Kosongkan tabel
-                document.querySelector('#rawatInapBody').innerHTML = ''; // Kosongkan tabel
+                document.querySelector('#rekamMedisRawatJalanBody').innerHTML = '';
+                document.querySelector('#rekamMedisRujukanBody').innerHTML = '';
+                document.querySelector('#rawatInapBody').innerHTML = '';
                 updateDashboardStats();
             } catch (error) {
                 console.error("Error logout:", error);
@@ -851,9 +871,9 @@
                 pasienData = [];
                 renderPasienTableDashboard();
                 renderPasienTablePendaftaran();
-                document.querySelector('#tabelRekamMedisRawatJalan tbody').innerHTML = ''; // Kosongkan tabel
-                document.querySelector('#tabelRekamMedisRujukan tbody').innerHTML = ''; // Kosongkan tabel
-                document.querySelector('#rawatInapBody').innerHTML = ''; // Kosongkan tabel
+                document.querySelector('#rekamMedisRawatJalanBody').innerHTML = '';
+                document.querySelector('#rekamMedisRujukanBody').innerHTML = '';
+                document.querySelector('#rawatInapBody').innerHTML = '';
                 updateDashboardStats();
             }
         });
